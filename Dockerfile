@@ -38,15 +38,15 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     pip install huggingface_hub[hf_xet] && \
     pip install -r /requirements.txt --no-cache-dir
 
-# Copy and run script to fetch models
-COPY builder/fetch_models.py /fetch_models.py
-RUN python /fetch_models.py && \
-    rm /fetch_models.py
-
-# Copy handler and other code
+## Copy and run script to fetch models
+#COPY builder/fetch_models.py /fetch_models.py
+#RUN python /fetch_models.py && \
+#    rm /fetch_models.py
+#
+## Copy handler and other code
 COPY src .
-
-# test input that will be used when the container runs outside of runpod
+#
+## test input that will be used when the container runs outside of runpod
 COPY test_input.json .
 
 # Set default command
