@@ -18,14 +18,7 @@ from faster_whisper.utils import format_timestamp
 
 # Define available models (for validation)
 AVAILABLE_MODELS = {
-    "tiny",
-    "base",
-    "small",
-    "medium",
-    "large-v1",
-    "large-v2",
-    "large-v3",
-    "turbo",
+    "french-v3"
 }
 
 
@@ -46,7 +39,7 @@ class Predictor:
     def predict(
         self,
         audio,
-        model_name="base",
+        model_name="french-v3",
         transcription="plain_text",
         translate=False,
         translation="plain_text",  # Added in a previous PR
@@ -63,8 +56,8 @@ class Predictor:
         compression_ratio_threshold=2.4,
         logprob_threshold=-1.0,
         no_speech_threshold=0.6,
-        enable_vad=False,
-        word_timestamps=False,
+        enable_vad=True,
+        word_timestamps=True,
     ):
         """
         Run a single prediction on the model, loading/unloading models as needed.
@@ -97,7 +90,7 @@ class Predictor:
                 print(f"Loading model: {model_name}...")
                 try:
                     loaded_model = WhisperModel(
-                        model_name,
+                        "./models/whisper-large-v3-french/ctranslate2",
                         device="cuda" if rp_cuda.is_available() else "cpu",
                         compute_type="float16" if rp_cuda.is_available() else "int8",
                     )
@@ -137,22 +130,22 @@ class Predictor:
                 str(audio),
                 language=language,
                 task="transcribe",
-                beam_size=beam_size,
-                best_of=best_of,
-                patience=patience,
-                length_penalty=length_penalty,
-                temperature=temperature,
-                compression_ratio_threshold=compression_ratio_threshold,
-                log_prob_threshold=logprob_threshold,
-                no_speech_threshold=no_speech_threshold,
-                condition_on_previous_text=condition_on_previous_text,
-                initial_prompt=initial_prompt,
-                prefix=None,
-                suppress_blank=True,
-                suppress_tokens=[-1],  # Might need conversion from string
-                without_timestamps=False,
-                max_initial_timestamp=1.0,
-                word_timestamps=word_timestamps,
+                #beam_size=beam_size,
+                #best_of=best_of,
+                #patience=patience,
+                #length_penalty=length_penalty,
+                #temperature=temperature,
+                #compression_ratio_threshold=compression_ratio_threshold,
+                #log_prob_threshold=logprob_threshold,
+                #no_speech_threshold=no_speech_threshold,
+                #condition_on_previous_text=condition_on_previous_text,
+                #initial_prompt=initial_prompt,
+                #prefix=None,
+                #suppress_blank=True,
+                #suppress_tokens=[-1],  # Might need conversion from string
+                #without_timestamps=False,
+                #max_initial_timestamp=1.0,
+                #word_timestamps=word_timestamps,
                 vad_filter=enable_vad,
             )
         )

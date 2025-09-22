@@ -38,12 +38,11 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     pip install huggingface_hub[hf_xet] && \
     pip install -r /requirements.txt --no-cache-dir
 
-## Copy and run script to fetch models
-#COPY builder/fetch_models.py /fetch_models.py
-#RUN python /fetch_models.py && \
-#    rm /fetch_models.py
-#
-## Copy handler and other code
+
+RUN python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='bofenghuang/whisper-large-v3-french', local_dir='./models/whisper-large-v3-french', allow_patterns='ctranslate2/*')"
+
+#COPY models models/
+
 COPY src .
 #
 ## test input that will be used when the container runs outside of runpod
